@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ac.iie.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="cn.ac.iie.model.User" >
+    <id column="UID" property="uid" jdbcType="INTEGER" />
+    <result column="UPASSWORD" property="upassword" jdbcType="VARCHAR" />
+    <result column="USEX" property="usex" jdbcType="BIT" />
+    <result column="UNAME" property="uname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UID, UPASSWORD, USEX, UNAME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where UID = #{uid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_user
+    where UID = #{uid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ac.iie.model.User" >
+    insert into t_user (UID, UPASSWORD, USEX, 
+      UNAME)
+    values (#{uid,jdbcType=INTEGER}, #{upassword,jdbcType=VARCHAR}, #{usex,jdbcType=BIT}, 
+      #{uname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ac.iie.model.User" >
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        UID,
+      </if>
+      <if test="upassword != null" >
+        UPASSWORD,
+      </if>
+      <if test="usex != null" >
+        USEX,
+      </if>
+      <if test="uname != null" >
+        UNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="upassword != null" >
+        #{upassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null" >
+        #{usex,jdbcType=BIT},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ac.iie.model.User" >
+    update t_user
+    <set >
+      <if test="upassword != null" >
+        UPASSWORD = #{upassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null" >
+        USEX = #{usex,jdbcType=BIT},
+      </if>
+      <if test="uname != null" >
+        UNAME = #{uname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UID = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ac.iie.model.User" >
+    update t_user
+    set UPASSWORD = #{upassword,jdbcType=VARCHAR},
+      USEX = #{usex,jdbcType=BIT},
+      UNAME = #{uname,jdbcType=VARCHAR}
+    where UID = #{uid,jdbcType=INTEGER}
+  </update>
+</mapper>
